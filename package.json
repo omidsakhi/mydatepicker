@@ -1,10 +1,10 @@
 {
   "name": "mydatepicker",
-  "version": "1.8.3",
-  "description": "Angular2 date picker",
+  "version": "2.0.10",
+  "description": "Angular date picker",
   "keywords": [
     "Angular2",
-    "datepicker",
+    "Angular4",
     "date picker"
   ],
   "author": "kekeh",
@@ -20,7 +20,7 @@
     "test": "karma start config/karma.conf.js",
     "tslint": "gulp tslint",
     "ngc": "ngc -p tsconfig.publish.json",
-    "bundle": "rollup -c rollup.config.js && uglifyjs npmdist/bundles/mydatepicker.umd.js -c --screw-ie8 -o npmdist/bundles/mydatepicker.umd.min.js"
+    "bundle": "rollup -c rollup.config.js && uglifyjs npmdist/bundles/mydatepicker.umd.js --compress --mangle --screw-ie8 -o npmdist/bundles/mydatepicker.umd.min.js"
   },
   "main": "bundles/mydatepicker.umd.js",
   "typings": "index.d.ts",

@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {IMyOptions, IMyDateModel, IMyInputFieldChanged, IMyCalendarViewChanged, IMyInputFocusBlur} from '../../src/my-date-picker/interfaces';
+import {IMyDpOptions, IMyDateModel, IMyInputFieldChanged, IMyCalendarViewChanged, IMyInputFocusBlur, IMyMarkedDate, IMyDate} from '../../src/my-date-picker/interfaces';
 import {MyDatePicker} from '../../src/my-date-picker/my-date-picker.component';
 
 declare var require:any;
@@ -14,30 +14,49 @@ export class SampleDatePickerNormal implements OnInit {
 
     @ViewChild('mydp') mydp: MyDatePicker;
 
-    private myDatePickerNormalOptions: IMyOptions = {
+    private myDatePickerNormalOptions: IMyDpOptions = {
         todayBtnTxt: 'Today',
-        dateFormat: 'dd.mm.yyyy',
+        dateFormat: 'mmm dd, yyyy',
         firstDayOfWeek: 'mo',
         sunHighlight: true,
         markCurrentDay: true,
         height: '34px',
         width: '210px',
-        selectionTxtFontSize: '18px',
         alignSelectorRight: false,
         openSelectorTopOfInput: false,
         indicateInvalidDate: true,
-        editableMonthAndYear: true,
+        monthSelector: true,
+        yearSelector: true,
         minYear: 1900,
         maxYear: 2200,
         componentDisabled: false,
-        inputValueRequired: false,
         showClearDateBtn: true,
+        showDecreaseDateBtn: false,
+        showIncreaseDateBtn: false,
         showSelectorArrow: true,
         showInputField: true,
         openSelectorOnInputClick: false,
         disableHeaderButtons: true,
-        inputAutoFill: true,
-        showWeekNumbers: false
+        showWeekNumbers: false,
+        markDates: [],
+        satHighlight: false,
+        highlightDates: [],
+        markWeekends: <IMyMarkedDate>{},
+        monthLabels: {
+            1: 'January',
+            2: 'February',
+            3: 'March',
+            4: 'April',
+            5: 'May',
+            6: 'June',
+            7: 'July',
+            8: 'August',
+            9: 'September',
+            10: 'October',
+            11: 'November',
+            12: 'December'
+        },
+        allowDeselectDate: true
     };
     private selectedDateNormal:string = '';
 
@@ -45,6 +64,7 @@ export class SampleDatePickerNormal implements OnInit {
     private border: string = 'none';
 
     private placeholder: string = 'Select date';
+    private disabled: boolean = false;
 
     constructor() {}
 
@@ -53,9 +73,7 @@ export class SampleDatePickerNormal implements OnInit {
     }
 
     onDisableComponent(checked: boolean) {
-        let copy = this.getCopyOfOptions();
-        copy.componentDisabled = checked;
-        this.myDatePickerNormalOptions = copy;
+        this.disabled = checked;
     }
 
     onEditableDateField(checked: boolean) {
@@ -74,6 +92,18 @@ export class SampleDatePickerNormal implements OnInit {
     onShowClearDateButton(checked: boolean) {
         let copy = this.getCopyOfOptions();
         copy.showClearDateBtn = checked;
+        this.myDatePickerNormalOptions = copy;
+    }
+
+    onShowDecreaseDateButton(checked: boolean) {
+        let copy = this.getCopyOfOptions();
+        copy.showDecreaseDateBtn = checked;
+        this.myDatePickerNormalOptions = copy;
+    }
+
+    onShowIncreaseDateButton(checked: boolean) {
+        let copy = this.getCopyOfOptions();
+        copy.showIncreaseDateBtn = checked;
         this.myDatePickerNormalOptions = copy;
     }
 
@@ -107,15 +137,67 @@ export class SampleDatePickerNormal implements OnInit {
         this.myDatePickerNormalOptions = copy;
     }
 
-    onInputAutoFill(checked: boolean) {
-        let copy = this.getCopyOfOptions();
-        copy.inputAutoFill = checked;
-        this.myDatePickerNormalOptions = copy;
-    }
-
     onShowWeekNumbers(checked: boolean) {
         let copy = this.getCopyOfOptions();
         copy.showWeekNumbers = checked;
+        this.myDatePickerNormalOptions = copy;
+    }
+
+    onMarkToday(checked: boolean): void {
+        let d: Date = new Date();
+        let copy = this.getCopyOfOptions();
+        copy.markDates = checked ? [{dates: [{year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate()}], color: '#C30000'}] : [];
+        this.myDatePickerNormalOptions = copy;
+    }
+
+    onMonthSelector(checked: boolean) {
+        let copy = this.getCopyOfOptions();
+        copy.monthSelector = checked;
+        this.myDatePickerNormalOptions = copy;
+    }
+
+    onYearSelector(checked: boolean) {
+        let copy = this.getCopyOfOptions();
+        copy.yearSelector = checked;
+        this.myDatePickerNormalOptions = copy;
+    }
+
+    onMarkWeekends(checked: boolean): void {
+        let copy = this.getCopyOfOptions();
+        copy.markWeekends = checked ? {marked: true, color: 'blue'} : {marked: false, color: ''};
+        this.myDatePickerNormalOptions = copy;
+    }
+
+    onHighlighSaturday(checked: boolean): void {
+        let copy = this.getCopyOfOptions();
+        copy.satHighlight = checked;
+        this.myDatePickerNormalOptions = copy;
+    }
+
+    onHighlighSunday(checked: boolean): void {
+        let copy = this.getCopyOfOptions();
+        copy.sunHighlight = checked;
+        this.myDatePickerNormalOptions = copy;
+    }
+
+    onHighlightDates(checked: boolean): void {
+        let d: Date = new Date();
+        let copy = this.getCopyOfOptions();
+        let dates: Array<IMyDate> = [];
+        dates.push({year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate()});
+
+        d.setDate(d.getDate() + 1);
+        dates.push({year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate()});
+
+        dates.push({year: 2017, month: 6, day: 1});
+
+        copy.highlightDates = checked ? dates : [];
+        this.myDatePickerNormalOptions = copy;
+    }
+
+    onAllowDeselectDate(checked: boolean): void {
+        let copy = this.getCopyOfOptions();
+        copy.allowDeselectDate = checked;
         this.myDatePickerNormalOptions = copy;
     }
 
@@ -158,7 +240,7 @@ export class SampleDatePickerNormal implements OnInit {
         console.log('onInputFocusBlur(): Reason: ', event. reason, ' - Value: ', event.value);
     }
 
-    getCopyOfOptions(): IMyOptions {
+    getCopyOfOptions(): IMyDpOptions {
         return JSON.parse(JSON.stringify(this.myDatePickerNormalOptions));
     }
 }
