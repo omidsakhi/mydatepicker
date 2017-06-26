@@ -205,6 +205,8 @@ Value of the __options__ attribute is a type of [IMyDpOptions](https://github.co
 | __satHighlight__   | false | boolean | Saturday red colored on calendar. |
 | __highlightDates__   | no default value | Array<[IMyDate](https://github.com/kekeh/mydatepicker/blob/master/src/my-date-picker/interfaces/my-date.interface.ts)> | Dates red colored on calendar. For example: [{year: 2016, month: 11, day: 14}, {year: 2016, month: 1, day: 15}] |
 | __markCurrentDay__   | true | boolean | Is current day (today) marked on calendar. |
+| __markCurrentMonth__   | true | boolean | Is current month marked on calendar. Can be used if __monthSelector = true__. |
+| __markCurrentYear__   | true | boolean | Is current year marked on calendar. Can be used if __yearSelector = true__. |
 | __monthSelector__  | true | boolean | If month label is selected opens a selector of months. |
 | __yearSelector__  | true | boolean | If year label is selected opens a selector of years. |
 | __minYear__   | 1100 | number | Minimum allowed year in calendar. Cannot be less than 1100. |
@@ -221,7 +223,7 @@ Value of the __options__ attribute is a type of [IMyDpOptions](https://github.co
 | __showWeekNumbers__   | false | boolean | Are week numbers visible or not on calendar. Can be used if __firstDayOfWeek = mo__. |
 | __selectorHeight__   | 232px | string | Selector height. |
 | __selectorWidth__   | 252px | string | Selector width. |
-| __allowDeselectDate__   | true | boolean | Is deselect of selected date allowed or not. |
+| __allowDeselectDate__   | false | boolean | Is deselect of selected date allowed or not. |
 | __inline__   | false | boolean | Show mydatepicker in inline mode. |
 | __showClearDateBtn__   | true | boolean | Is clear date button shown or not. Can be used if __inline = false__. |
 | __showDecreaseDateBtn__   | false | boolean | Is decrease date button shown or not. Can be used if __inline = false__. |
@@ -264,7 +266,7 @@ Value of the __options__ attribute is a type of [IMyDpOptions](https://github.co
 An ISO 639-1 language code can be provided as shorthand for the following options (dayLabels, monthLabels, dateFormat, todayBtnTxt, firstDayOfWeek and sunHighlight).
 Currently supported languages: __en__, __fr__, __ja__, __fi__, __es__, __hu__, __sv__, __nl__, __ru__, __uk__, __no__, __tr__,
 __pt-br__, __de__, __it__, __it-ch__, __pl__, __my__, __sk__, __sl__, __zh-cn__, __he__, __ro__, __ca__, __id__, __en-au__, __am-et__, __cs__, __el__, __kk__,
-__th__, __ko-kr__, __da__ and __lt__.
+__th__, __ko-kr__, __da__, __lt__, __vi__, __bn__, __bg__, __hr__, __ar__ and __is__.
 
 The __locale__ options can be override by __options__ attribute.
 
@@ -285,15 +287,14 @@ Type of the __selDate__ attribute can be a string or an [IMyDate](https://github
 
 ### defaultMonth attribute
 
-If __selDate__ is not specified, when the datepicker is opened, it will
+If __selDate__ is not specified, when the calendar is opened, it will
 ordinarily default to selecting the current date. If you would prefer
 a different year and month to be the default for a freshly chosen date
-picking operation, specify a __[defaultMonth]__ attribute.
+picking operation, specify a __defaultMonth__ attribute.
 
-Value of the __[defaultMonth]__ attribute is a string which contain year number and
-month number separated by delimiter. The delimiter can be any special character.
-For example the value of the __[defaultMonth]__ attribute can be: __2016.08__,
-__08-2016__, __08/2016__.
+Value of the defaultMonth attribute can be:
+  * [IMyDefaultMonth](https://github.com/kekeh/mydatepicker/blob/master/src/my-date-picker/interfaces/my-default-month.interface.ts) object. The value of __defMonth__ property can be a string which contain year number and month number separated by delimiter. The delimiter can be any special character. For example: __08-2016__ or __08/2016__.
+  * a string which contain year number and month number separated by delimiter. The delimiter can be any special character. For example: __08-2016__ or __08/2016__.
 
 [Here](https://github.com/kekeh/mydatepicker/wiki/Initialize-with-defaultMonth-attribute) is an example on how to use this attribute.
 
@@ -307,8 +308,10 @@ Boolean value indicating is the component disabled or not. [Here](https://github
 
 ### selector attribute
 
-Selector can be opened or closed using this attribute. [Here](https://github.com/kekeh/mydatepicker/wiki/Open-selector-with-selector-attribute) is an example on how to use this attribute.
-Another way is to call a function of mydatepicker. [Here](https://github.com/kekeh/mydatepicker/wiki/Calling-date-picker-function) is an example.
+Selector can be opened or closed using this attribute. Value of the selector attribute can be:
+  * [IMySelector](https://github.com/kekeh/mydatepicker/blob/master/src/my-date-picker/interfaces/my-selector.interface.ts) object. The value of __open__ property is a boolean value indicating the state of the selector.
+
+[Here](https://github.com/kekeh/mydatepicker/wiki/Open-selector-with-selector-attribute) is an example on how to use this attribute. Another way is to call a function of mydatepicker. [Here](https://github.com/kekeh/mydatepicker/wiki/Calling-date-picker-function) is an example.
 
 ## Callbacks
 
@@ -368,6 +371,7 @@ Another way is to call a function of mydatepicker. [Here](https://github.com/kek
       * 3 = calendar closed by calendar button
       * 4 = calendar closed by outside click (document click)
       * 5 = calendar closed by ESC key
+      * 6 = calendar closed by API call
 
   * Example of the calendar toggle callback:
   ```js

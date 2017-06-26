@@ -78,10 +78,10 @@ describe('MyDatePicker', () => {
         btnpicker.nativeElement.click();
 
         fixture.detectChanges();
-        let currday = getElement('.currday');
-        expect(currday).not.toBe(null);
+        let markcurrday = getElement('.markcurrday');
+        expect(markcurrday).not.toBe(null);
 
-        currday.nativeElement.click();
+        markcurrday.nativeElement.click();
 
         let dateStr = getDateString(date);
         fixture.detectChanges();
@@ -98,15 +98,18 @@ describe('MyDatePicker', () => {
         let date = new Date();
         comp.selectedMonth = {monthTxt: '', monthNbr: date.getMonth() + 1, year: date.getFullYear()};
 
+        comp.options = {allowDeselectDate: true};
+        comp.parseOptions();
+
         fixture.detectChanges();
         let btnpicker = getElement('.btnpicker');
         btnpicker.nativeElement.click();
 
         fixture.detectChanges();
-        let currday = getElement('.currday');
-        expect(currday).not.toBe(null);
+        let markcurrday = getElement('.markcurrday');
+        expect(markcurrday).not.toBe(null);
 
-        currday.nativeElement.click();
+        markcurrday.nativeElement.click();
 
         let dateStr = getDateString(date);
         fixture.detectChanges();
@@ -123,9 +126,9 @@ describe('MyDatePicker', () => {
         expect(selectedday).not.toBe(null);
 
         fixture.detectChanges();
-        currday = getElement('.currday');
-        expect(currday).not.toBe(null);
-        currday.nativeElement.click();
+        markcurrday = getElement('.markcurrday');
+        expect(markcurrday).not.toBe(null);
+        markcurrday.nativeElement.click();
 
         fixture.detectChanges();
         selectedday = getElement('.selectedday');
@@ -662,7 +665,7 @@ describe('MyDatePicker', () => {
         expect(highlight.length).toBe(0);
     });
 
-    it('options - current day marked', () => {
+    it('options - mark current day', () => {
         comp.options = {markCurrentDay: true};
 
         comp.parseOptions();
@@ -672,8 +675,8 @@ describe('MyDatePicker', () => {
         btnpicker.nativeElement.click();
 
         fixture.detectChanges();
-        let currday = getElement('.currday');
-        expect(currday).not.toBe(null);
+        let markcurrday = getElement('.markcurrday');
+        expect(markcurrday).not.toBe(null);
 
         btnpicker.nativeElement.click();
 
@@ -687,8 +690,44 @@ describe('MyDatePicker', () => {
         comp.parseOptions();
 
         fixture.detectChanges();
-        currday = getElement('.currday');
-        expect(currday).toBe(null);
+        markcurrday = getElement('.markcurrday');
+        expect(markcurrday).toBe(null);
+    });
+
+    it('options - mark current month', () => {
+        comp.options = {markCurrentMonth: true};
+
+        comp.parseOptions();
+
+        fixture.detectChanges();
+        let btnpicker = getElement('.btnpicker');
+        btnpicker.nativeElement.click();
+
+        fixture.detectChanges();
+        let monthlabel = getElement('.monthlabel');
+        monthlabel.nativeElement.click();
+
+        fixture.detectChanges();
+        let markcurrmonth = getElement('.markcurrmonth');
+        expect(markcurrmonth).not.toBe(null);
+    });
+
+    it('options - mark current year', () => {
+        comp.options = {markCurrentYear: true};
+
+        comp.parseOptions();
+
+        fixture.detectChanges();
+        let btnpicker = getElement('.btnpicker');
+        btnpicker.nativeElement.click();
+
+        fixture.detectChanges();
+        let yearlabel = getElement('.yearlabel');
+        yearlabel.nativeElement.click();
+
+        fixture.detectChanges();
+        let markcurryear = getElement('.markcurryear');
+        expect(markcurryear).not.toBe(null);
     });
 
     it('options - month selector', () => {
@@ -1359,18 +1398,18 @@ describe('MyDatePicker', () => {
         btnpicker.nativeElement.click();
 
         fixture.detectChanges();
-        let currday = getElement('.currday');
-        expect(currday).not.toBe(null);
+        let markcurrday = getElement('.markcurrday');
+        expect(markcurrday).not.toBe(null);
 
-        currday.nativeElement.click();
+        markcurrday.nativeElement.click();
 
         fixture.detectChanges();
         btnpicker = getElement('.btnpicker');
         btnpicker.nativeElement.click();
 
         fixture.detectChanges();
-        currday = getElement('.currday');
-        expect(currday).not.toBe(null);
+        markcurrday = getElement('.markcurrday');
+        expect(markcurrday).not.toBe(null);
 
         fixture.detectChanges();
         let selector = getElement('.selector');
@@ -1401,10 +1440,10 @@ describe('MyDatePicker', () => {
         btnpicker.nativeElement.click();
 
         fixture.detectChanges();
-        let currday = getElement('.currday');
-        expect(currday).not.toBe(null);
+        let markcurrday = getElement('.markcurrday');
+        expect(markcurrday).not.toBe(null);
 
-        currday.nativeElement.click();
+        markcurrday.nativeElement.click();
 
         fixture.detectChanges();
         let btnclear = getElement('.btnclear');
@@ -1420,10 +1459,10 @@ describe('MyDatePicker', () => {
         btnpicker.nativeElement.click();
 
         fixture.detectChanges();
-        currday = getElement('.currday');
-        expect(currday).not.toBe(null);
+        markcurrday = getElement('.markcurrday');
+        expect(markcurrday).not.toBe(null);
 
-        currday.nativeElement.click();
+        markcurrday.nativeElement.click();
 
         fixture.detectChanges();
         btnclear = getElement('.btnclear');
@@ -1441,10 +1480,10 @@ describe('MyDatePicker', () => {
         btnpicker.nativeElement.click();
 
         fixture.detectChanges();
-        currday = getElement('.currday');
-        expect(currday).not.toBe(null);
+        markcurrday = getElement('.markcurrday');
+        expect(markcurrday).not.toBe(null);
 
-        currday.nativeElement.click();
+        markcurrday.nativeElement.click();
 
         fixture.detectChanges();
         btnclear = getElement('.btnclear');
@@ -1460,10 +1499,10 @@ describe('MyDatePicker', () => {
         btnpicker.nativeElement.click();
 
         fixture.detectChanges();
-        let currday = getElement('.currday');
-        expect(currday).not.toBe(null);
+        let markcurrday = getElement('.markcurrday');
+        expect(markcurrday).not.toBe(null);
 
-        currday.nativeElement.click();
+        markcurrday.nativeElement.click();
 
         fixture.detectChanges();
         let btndecrease = getElement('.btndecrease');
@@ -1477,10 +1516,10 @@ describe('MyDatePicker', () => {
         btnpicker.nativeElement.click();
 
         fixture.detectChanges();
-        currday = getElement('.currday');
-        expect(currday).not.toBe(null);
+        markcurrday = getElement('.markcurrday');
+        expect(markcurrday).not.toBe(null);
 
-        currday.nativeElement.click();
+        markcurrday.nativeElement.click();
 
         fixture.detectChanges();
         btndecrease = getElement('.btndecrease');
@@ -1489,6 +1528,9 @@ describe('MyDatePicker', () => {
 
         btndecrease.nativeElement.click();
 
+        fixture.detectChanges();
+        let btnclear = getElement('.btnclear');
+        btnclear.nativeElement.click();
 
         comp.options = {showDecreaseDateBtn: false};
         comp.parseOptions();
@@ -1498,10 +1540,10 @@ describe('MyDatePicker', () => {
         btnpicker.nativeElement.click();
 
         fixture.detectChanges();
-        currday = getElement('.currday');
-        expect(currday).not.toBe(null);
+        markcurrday = getElement('.markcurrday');
+        expect(markcurrday).not.toBe(null);
 
-        currday.nativeElement.click();
+        markcurrday.nativeElement.click();
 
         fixture.detectChanges();
         btndecrease = getElement('.btndecrease');
@@ -1517,10 +1559,10 @@ describe('MyDatePicker', () => {
         btnpicker.nativeElement.click();
 
         fixture.detectChanges();
-        let currday = getElement('.currday');
-        expect(currday).not.toBe(null);
+        let markcurrday = getElement('.markcurrday');
+        expect(markcurrday).not.toBe(null);
 
-        currday.nativeElement.click();
+        markcurrday.nativeElement.click();
 
         fixture.detectChanges();
         let btnincrease = getElement('.btnincrease');
@@ -1534,10 +1576,10 @@ describe('MyDatePicker', () => {
         btnpicker.nativeElement.click();
 
         fixture.detectChanges();
-        currday = getElement('.currday');
-        expect(currday).not.toBe(null);
+        markcurrday = getElement('.markcurrday');
+        expect(markcurrday).not.toBe(null);
 
-        currday.nativeElement.click();
+        markcurrday.nativeElement.click();
 
         fixture.detectChanges();
         btnincrease = getElement('.btnincrease');
@@ -1545,6 +1587,10 @@ describe('MyDatePicker', () => {
         btnincrease.nativeElement.click();
 
         btnincrease.nativeElement.click();
+
+        fixture.detectChanges();
+        let btnclear = getElement('.btnclear');
+        btnclear.nativeElement.click();
 
 
         comp.options = {showIncreaseDateBtn: false};
@@ -1555,10 +1601,10 @@ describe('MyDatePicker', () => {
         btnpicker.nativeElement.click();
 
         fixture.detectChanges();
-        currday = getElement('.currday');
-        expect(currday).not.toBe(null);
+        markcurrday = getElement('.markcurrday');
+        expect(markcurrday).not.toBe(null);
 
-        currday.nativeElement.click();
+        markcurrday.nativeElement.click();
 
         fixture.detectChanges();
         btnincrease = getElement('.btnincrease');
